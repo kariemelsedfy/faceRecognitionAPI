@@ -1,5 +1,6 @@
 from fastapi import FastAPI, APIRouter, File, UploadFile, Form
 from deepface import DeepFace
+from database import insertEmbedding
 import shutil
 router = APIRouter()
 
@@ -11,7 +12,9 @@ async def addFace(image : UploadFile = File(...), userID: int = Form(...)):
         shutil.copyfileobj(image.file, f)
     
     userEmbedding = DeepFace.represent(img_path=imagePath)
-    print(userEmbedding)
+
+    insertEmbedding(userID, userEmbedding[0]['embedding'])
+
     return {
         "status": "received",
         "employeeID": userID,
