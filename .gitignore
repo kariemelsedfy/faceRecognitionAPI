@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environments
+.venv
+.venv-3.9
+.venv/
+.venv-3.9/
+
+# OS files
+.DS_Store
+
+# VSCode config (optional, personal)
+.vscode/
+
+# Temp images or uploads
+templmages/
+
+# Logs and cache
+*.log
+*.cache
+*.db
+
+# Environment variables
+.env
+.env.*
+
+# Bytecode and compiled files
+*.so
+
+# FastAPI Swagger cache (if applicable)
+openapi.json
+
+# Coverage / testing
+htmlcov/
+coverage.xml
+.pytest_cache/
