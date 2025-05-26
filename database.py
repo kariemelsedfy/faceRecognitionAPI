@@ -1,5 +1,5 @@
 import psycopg2
-
+from helpers.getFaceRecognitionQuery import getFaceRecognitionQuery
 #Connection string to postgresql
 def getConnection():
     connection = psycopg2.connect(
@@ -38,4 +38,8 @@ def insertEmbedding(userID, embedding):
     connection.close()
 
 
-
+def lookupFace(embedding):
+    connection = getConnection()
+    cursor = connection.cursor()
+    cursor.execute(getFaceRecognitionQuery(10, embedding))
+    return cursor.fetchall()[0][0] #returns the id of the matched employee
