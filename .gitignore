@@ -18,7 +18,7 @@ __pycache__/
 
 # Temp images or uploads
 tempImages/*
-CelebrityFacesDataset/
+CelebrityFacesDataset/*
 
 # Logs and cache
 *.log
