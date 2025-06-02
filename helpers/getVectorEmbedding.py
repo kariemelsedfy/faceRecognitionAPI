@@ -19,3 +19,5 @@ def getVectorEmbedding(image: UploadFile):
 def getVectorEmbeddingFromLocalPhoto(imagePath: str):
     userEmbedding = DeepFace.represent(img_path=imagePath, enforce_detection=False)
     return userEmbedding[0]['embedding']
+
+

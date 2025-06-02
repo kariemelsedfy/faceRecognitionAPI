@@ -9,9 +9,13 @@ router = APIRouter()
 async def recognize(image : UploadFile = File(...)):
     userEmbedding = getVectorEmbedding.getVectorEmbedding(image)
 
-    userID = lookupFace(userEmbedding)  
+    topResult = lookupFace(userEmbedding)  
 
-    return {
-        "status": "received",
-        "userID": {userID}
-    }
+    if topResult:
+        return {
+            "status": "received",
+            "userID": {topResult[0][1]},
+            "username": {topResult[0][2]}, 
+            "distance": {topResult[0][3]}
+        }
+    return {"status": "no user found"}

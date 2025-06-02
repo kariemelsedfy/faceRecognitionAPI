@@ -39,14 +39,18 @@ def insertEmbedding(userID, embedding, username = "unknown"):
 
 
 
+ 
 def lookupFace(embedding):
     connection = getConnection()
     cursor = connection.cursor()
     #cursor.execute(getFaceRecognitionQuery.getFaceRecognitionQuery(10, embedding))
-    cursor.execute(getTopXMatchesQuery.getTopXMatchesQuery(embedding, 20))
+    cursor.execute(getFaceRecognitionQuery.getFaceRecognitionQuery(1, embedding))
     result = cursor.fetchall()
     
-    if result:
+    if result: 
         print(result)
-        return result[0][1]  # userID
+        return result  
     return None
+
+
+

@@ -21,6 +21,10 @@ tempImages/*
 CelebrityFacesDataset/*
 tempImages
 CelebrityFacesDataset
+CapturedFaces
+CapturedFaces/
+CapturedFaces/*
+
 
 # Logs and cache
 *.log
@@ -41,3 +45,6 @@ openapi.json
 htmlcov/
 coverage.xml
 .pytest_cache/
+archive.zip
+CelebrityFacesDataset.zip
+queries

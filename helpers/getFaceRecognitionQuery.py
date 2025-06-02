@@ -1,4 +1,4 @@
-def getFaceRecognitionQuery(threshold: int, target) -> str:
+def getFaceRecognitionQuery(threshold, target) -> str:
     query = f"""
         WITH target_vector AS (
             SELECT ARRAY{target}::DECIMAL[] AS input_embedding
@@ -6,13 +6,14 @@ def getFaceRecognitionQuery(threshold: int, target) -> str:
         SELECT 
             stored.id,
             stored.userID,
+            stored.username,
             SQRT(SUM(POW(stored_value - input_value, 2))) AS euclidean_distance
         FROM 
             embeddings stored,
             target_vector input,
             UNNEST(stored.embedding, input.input_embedding) AS pair(stored_value, input_value)
         GROUP BY 
-            stored.id, stored.userid
+            stored.id, stored.userid, stored.username
         HAVING 
             SQRT(SUM(POW(stored_value - input_value, 2))) < {threshold}
         ORDER BY 

@@ -2,13 +2,14 @@ from typing import Union
 
 from fastapi import FastAPI
 
-from api import register, recognize
+from api import register, recognize, stream
 
 app = FastAPI()
 
 
 app.include_router(register.router)
 app.include_router(recognize.router)
+app.include_router(stream.router)
 
 @app.get("/")
 def read_root():
