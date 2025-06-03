@@ -6,7 +6,6 @@ router = APIRouter()
 
 @router.get("/stream")
 async def stream():
-    databasePath = "CelebrityFacesDataset"
     return videoCapture.captureAndSaveFaces()
 
 

@@ -3,7 +3,7 @@ import cv2
 import os
 from deepface import DeepFace
 from helpers import getVectorEmbedding
-
+from database import lookupFace
 def captureAndSaveFaces(
     source=0,
     savePath="CapturedFaces",
@@ -16,6 +16,7 @@ def captureAndSaveFaces(
     startTime = time.time()
     savedFacesCount = 0
 
+    #Storing frames with faces locally
     while True:
         hasFrame, frame = cap.read()
         if not hasFrame:
@@ -31,12 +32,12 @@ def captureAndSaveFaces(
             cap.release()
             cv2.destroyAllWindows()
             print(f"Done: {savedFacesCount} face(s) saved. Exiting.")
-            return
+            break
         if time.time() - startTime >= timeThreshold:
             cap.release()
             cv2.destroyAllWindows()
             print(f"Timeout: {timeThreshold} seconds have passed.")
-            return
+            break
         #delete if you don't want the stream showing
         #cv2.imshow("VideoFeed", frame)
         #if cv2.waitKey(1) & 0xFF == ord("q"):
@@ -45,4 +46,21 @@ def captureAndSaveFaces(
     cap.release() 
     cv2.destroyAllWindows()
     cv2.waitKey(1)
-    print(f"Stopped early. {savedFacesCount} face(s) saved.") 
+    #print(f"Stopped early. {savedFacesCount} face(s) saved.") 
+
+
+    #Looking up the frames
+    for i in range(savedFacesCount):
+        embedding = getVectorEmbedding.getVectorEmbeddingFromLocalPhoto(os.path.join(savePath, f"face_{i}.jpg"))
+        result = lookupFace(embedding)
+
+        if result:
+            return {
+            "status": "received",
+            "userID": {result[0][1]},
+            "username": {result[0][2]}, 
+            "distance": {result[0][3]}
+        }
+    return {
+        "status": "user not found" 
+    }

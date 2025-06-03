@@ -49,7 +49,7 @@ def lookupFace(embedding):
     
     if result: 
         print(result)
-        return result  
+        return result   
     return None
 
 
