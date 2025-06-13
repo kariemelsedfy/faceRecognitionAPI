@@ -3,7 +3,7 @@ import cv2
 import os
 from deepface import DeepFace
 from helpers import getVectorEmbedding
-from database import lookupFace
+from database.database import lookupFace
 def captureAndSaveFaces(
     source=0,
     savePath="CapturedFaces",
@@ -51,7 +51,12 @@ def captureAndSaveFaces(
 
     #Looking up the frames
     for i in range(savedFacesCount):
-        embedding = getVectorEmbedding.getVectorEmbeddingFromLocalPhoto(os.path.join(savePath, f"face_{i}.jpg"))
+        try:
+            embedding = getVectorEmbedding.getVectorEmbeddingFromLocalPhoto(os.path.join(savePath, f"face_{i}.jpg"))
+        except ValueError:
+            return {
+                "status": "spoofing attempt detected"
+            } 
         result = lookupFace(embedding)
 
         if result:

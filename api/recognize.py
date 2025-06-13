@@ -1,6 +1,6 @@
 from fastapi import FastAPI, APIRouter, File, UploadFile
 from helpers import getVectorEmbedding
-from database import lookupFace
+from database.database import lookupFace
 router = APIRouter()
 
 

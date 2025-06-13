@@ -1,5 +1,6 @@
 import psycopg2
 from helpers import getFaceRecognitionQuery, getTopXMatchesQuery
+from deepface.modules.verification import find_threshold
 #Connection string to postgresql
 def getConnection():
     connection = psycopg2.connect(
@@ -43,12 +44,10 @@ def insertEmbedding(userID, embedding, username = "unknown"):
 def lookupFace(embedding):
     connection = getConnection()
     cursor = connection.cursor()
-    #cursor.execute(getFaceRecognitionQuery.getFaceRecognitionQuery(10, embedding))
-    cursor.execute(getFaceRecognitionQuery.getFaceRecognitionQuery(1, embedding))
+    cursor.execute(getFaceRecognitionQuery.getFaceRecognitionQuery(0.8, embedding))
     result = cursor.fetchall()
     
     if result: 
-        print(result)
         return result   
     return None
 
