@@ -2,7 +2,7 @@ from typing import Union
 
 from fastapi import FastAPI
 
-from api import register, recognize, stream
+from api import register, recognize, stream, compareTwoImages
 
 app = FastAPI()
 
@@ -10,7 +10,7 @@ app = FastAPI()
 app.include_router(register.router)
 app.include_router(recognize.router)
 app.include_router(stream.router)
-
+app.include_router(compareTwoImages.router)
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
