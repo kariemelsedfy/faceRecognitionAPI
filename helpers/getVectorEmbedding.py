@@ -21,3 +21,8 @@ def getVectorEmbeddingFromLocalPhoto(imagePath: str):
     return userEmbedding[0]['embedding']
 
 
+def getConfidenceLevelFromLocalPhoto(imagePath:str):
+    userEmbedding = DeepFace.represent(img_path=imagePath, enforce_detection=False, anti_spoofing=False)
+    return userEmbedding[0]['face_confidence']
+
+

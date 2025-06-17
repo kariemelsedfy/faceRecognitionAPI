@@ -1,4 +1,5 @@
 import time
+from typing import Optional
 import cv2
 import os
 from deepface import DeepFace
@@ -9,7 +10,9 @@ def captureAndSaveFaces(
     savePath="CapturedFaces",
     detectorBackend="opencv",
     maxFaceFrames=10, 
-    timeThreshold=10
+    timeThreshold=10, 
+    searchDatabase=True, 
+    throwErrorForSpoofing=False
 ):
     cap = cv2.VideoCapture(source)
     os.makedirs(savePath, exist_ok=True)
@@ -54,18 +57,27 @@ def captureAndSaveFaces(
         try:
             embedding = getVectorEmbedding.getVectorEmbeddingFromLocalPhoto(os.path.join(savePath, f"face_{i}.jpg"))
         except ValueError:
-            return {
-                "status": "spoofing attempt detected"
-            } 
-        result = lookupFace(embedding)
+            if throwErrorForSpoofing:
+                raise ValueError("Spoofing detected")
+            else:
+                return {
+                    "status": "spoofing attempt detected"
+                } 
+        if searchDatabase:
+            result = lookupFace(embedding)
 
-        if result:
-            return {
-            "status": "received",
-            "userID": {result[0][1]},
-            "username": {result[0][2]}, 
-            "distance": {result[0][3]}
+            if result:
+                return {
+                "status": "received",
+                "userID": {result[0][1]},
+                "username": {result[0][2]}, 
+                "distance": {result[0][3]}
+            }
+    if searchDatabase:
+        return {
+            "status": "user not found" 
         }
-    return {
-        "status": "user not found" 
-    }
+    return
+
+
+

@@ -24,7 +24,15 @@ CelebrityFacesDataset
 CapturedFaces
 CapturedFaces/
 CapturedFaces/*
-
+antispoofdataset/*
+antispoofdataset/
+antispoofdataset
+antispoofdataset.zip
+celebA_Spoof.zip
+celebA_Spoof.zip.001
+celebA_Spoof
+celebA_Spoof/
+celebA_Spoof/*
 
 # Logs and cache
 *.log
