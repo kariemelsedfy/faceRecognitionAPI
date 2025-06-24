@@ -4,7 +4,7 @@ from fastapi import FastAPI
 
 from api import register, recognize, stream, compareTwoImages
 
-app = FastAPI()
+app = FastAPI(swagger_ui_parameters={"syntaxHighlight": False, "displayRequestDuration": True})
 
 
 app.include_router(register.router)
