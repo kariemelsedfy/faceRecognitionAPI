@@ -12,11 +12,13 @@ async def compareTwoImages(image1 : UploadFile = File(...), image2 : UploadFile 
     threshold = find_threshold(model_name='VGG-Face', distance_metric='euclidean_l2')
     if distanceBetweenEmbeddings <= threshold:
         return {
+            "result": True,
             "status": "Images match",
             "distance": distanceBetweenEmbeddings,
             "threshold": threshold
         }
     return {
+        "result": False,
         "status": "Images do not match", 
         "distance": distanceBetweenEmbeddings, 
         "threshold": threshold
